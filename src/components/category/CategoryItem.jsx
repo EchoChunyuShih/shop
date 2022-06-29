@@ -24,13 +24,13 @@ const CategoryContainer = styled.div`
   align-items: center;
   justify-content: center;
   /* border: 1px solid black; */
-  margin: 0 7.5px 15px;
+  margin: 0px 7.5px 15px;
   overflow: hidden;
   /* box-shadow: 0 0 10px 0.5px rgba(0, 0, 0, 0.2); */
   &:hover {
     cursor: pointer;
     .background_img {
-      transform: scale(1.1);
+      transform: scale(1.05);
       transition: transform 0.6s ease-in-out;
     }
   }

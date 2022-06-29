@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { NavLink, Link } from "react-router-dom";
 import RebornSvg from "../../assets/logo.svg";
+
 const Navigator = () => {
   const [navOpen, setNavOpen] = useState(false);
   const [shwoNavItems, setShwoNavItems] = useState(false);
@@ -15,19 +16,20 @@ const Navigator = () => {
     }
   };
   return (
-    <Navbar onClick={toggleNavBar} className={navOpen ? "active" : null}>
-      <Logo to="/">
-        Logo
-        {/* <img src={RebornSvg} alt="logo" width="100px" fill="#eee" /> */}
-      </Logo>
+    <>
+      <Navbar onClick={toggleNavBar} className={navOpen ? "active" : null}>
+        <Link to="/">
+          {/* <Logo src={RebornSvg} /> */}
+          <Logo>Eclectic</Logo>
+        </Link>
 
-      <NavItems className={shwoNavItems && "active"}>
-        <NavItem to="/login">Login</NavItem>
-        <NavItem to="/cart">Cart</NavItem>
-
-        {/* <NavItem>Cart</NavItem> */}
-      </NavItems>
-    </Navbar>
+        <NavItems className={shwoNavItems && "active"}>
+          <NavItem to="/Shop">Shop</NavItem>
+          <NavItem to="/cart">Cart</NavItem>
+          <NavItem to="/signin">Sign In</NavItem>
+        </NavItems>
+      </Navbar>
+    </>
   );
 };
 
@@ -37,27 +39,37 @@ const Navbar = styled.div`
   top: 0;
   left: 10px;
   transform: translateX(-10px);
-  height: 2rem;
-  border-radius: 0% 0% 60px 60px;
-  width: 100px;
+  height: 3rem;
+  border-radius: 0% 0% 60px 0%;
+  width: 4rem;
+  padding-left: 20px;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   /* filter: drop-shadow(0 0 0.75rem crimson); */
   background-color: lavender;
   transition: all 0.5s ease-in-out;
   z-index: 20;
   cursor: pointer;
+  &:hover {
+    width: 7rem;
+    height: 4rem;
+  }
   &.active {
     height: 4rem;
     width: 100%;
+    border-radius: 0% 0% 60px 60px;
   }
 `;
-const Logo = styled(Link)`
+const Logo = styled.div`
   position: inherit;
-  background-color: pink;
+  /* background-color: #9056ce; */
   font-family: inherit;
   z-index: 20;
+  /* margin-top: 20px; */
+  margin-left: 15px;
+  /* margin: 30px 10px 30px; */
+  width: 50px;
 `;
 const NavItems = styled.div`
   opacity: 0;
