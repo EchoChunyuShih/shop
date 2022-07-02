@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import {
@@ -17,6 +17,7 @@ import {
   SubmitButton
 } from "../shared/FormComponents";
 import { FcGoogle } from "react-icons/fc";
+import { UserContext } from "../../context/user.context";
 
 const initialFormFields = {
   email: "",
@@ -28,6 +29,7 @@ const SignInForm = () => {
   const [errMsg, setErrMsg] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { setCurrentUser } = useContext(UserContext);
   // useEffect(() => {
   //   const signInGoogleRedirect = async () => {
   //     const response = await getRedirectResult(auth);
@@ -39,6 +41,7 @@ const SignInForm = () => {
   const signInWithGoogle = async () => {
     const { user } = await signInWithGooglePopup();
     createUserDocumentFromAuth(user);
+    setCurrentUser(user);
     navigate("/");
   };
   const handleFieldChange = e => {
@@ -53,6 +56,7 @@ const SignInForm = () => {
     try {
       const res = await signInAuthWithEmailAndPassword(email, password);
       console.log("sign in success");
+      setCurrentUser(res.user);
       navigate("/");
     } catch (err) {
       switch (err.code) {
