@@ -3,30 +3,31 @@ import styled from "styled-components";
 import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 
 export const Container = styled.div`
-  /* min-height: 600px; */
-  /* margin-bottom: 20px;
+  height: 1000px;
+  /* 
   overflow: scroll;  */
   width: 90%;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
-  width: 80%;
   max-width: 500px;
   overflow: scroll;
+  margin-bottom: 50px;
+  padding: 30px auto;
 `;
 export const RegisterFormElement = styled.form`
   display: flex;
   flex-direction: column;
   max-width: 90%;
   width: 80%;
-  justify-content: space-between;
-  height: 70%;
+  justify-content: center;
+  height: 600px;
   /* @media ${props => props.theme.device.tablet} {
   } */
 `;
 export const SignInFormElement = styled(RegisterFormElement)`
-  height: 65%;
+  height: 500px;
 `;
 export const FormInput = styled.input`
   font-family: inherit;
