@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import RebornSvg from "../../assets/logo.svg";
 import { RiGhostSmileLine } from "react-icons/ri";
 import { UserContext } from "../../context/user.context";
@@ -9,8 +9,8 @@ import { signOutUser } from "../../utils/firebase.utils";
 const Navigation = () => {
   const [navOpen, setNavOpen] = useState(true);
   const [shwoNavItems, setShwoNavItems] = useState(true);
-  const { currentUser, setCurrentUser } = useContext(UserContext);
-  console.log(currentUser);
+  const { currentUser } = useContext(UserContext);
+
   const toggleNavBar = e => {
     e.preventDefault();
     setNavOpen(!navOpen);
@@ -20,10 +20,7 @@ const Navigation = () => {
       setShwoNavItems(false);
     }
   };
-  const handleSignOut = async () => {
-    await signOutUser();
-    setCurrentUser(null);
-  };
+
   return (
     <>
       <Navbar onClick={toggleNavBar} className={navOpen ? "active" : null}>
@@ -36,7 +33,7 @@ const Navigation = () => {
           <NavItemLink to="/Shop">Shop</NavItemLink>
           <NavItemLink to="/cart">Cart</NavItemLink>
           {currentUser ? (
-            <NavItemDiv onClick={handleSignOut}>Sign Out</NavItemDiv>
+            <NavItemDiv onClick={signOutUser}>Sign Out</NavItemDiv>
           ) : (
             <NavItemLink to="/signin">Sign In</NavItemLink>
           )}
@@ -96,12 +93,14 @@ const NavItems = styled.div`
   justify-content: space-evenly;
   width: 80%;
   max-width: 900px;
+
   opacity: 0;
   &.active {
     opacity: 0.9;
   }
 `;
 const NavItemDiv = styled.div`
+  color: purple;
   display: flex;
   align-items: center;
   background-color: transparent;
@@ -115,7 +114,8 @@ const NavItemDiv = styled.div`
     opacity: 0.8;
   }
 `;
-const NavItemLink = styled(NavLink)`
+const NavItemLink = styled(Link)`
+  color: purple;
   display: flex;
   align-items: center;
   background-color: transparent;
