@@ -7,19 +7,25 @@ import { ThemeProvider } from "styled-components";
 import App from "./App";
 import GlobalCss, { theme } from "./global.css";
 import { UserProvider } from "./context/user.context";
+import { ProductsProvider } from "./context/product.context";
+import { CartProvider } from "./context/cart.context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <GlobalCss />
+  // <React.StrictMode>
+  <ThemeProvider theme={theme}>
+    <BrowserRouter>
+      <GlobalCss />
+      <ProductsProvider>
         <UserProvider>
-          <App />
+          <CartProvider>
+            <App />
+          </CartProvider>
         </UserProvider>
-      </BrowserRouter>
-    </ThemeProvider>
-  </React.StrictMode>
+      </ProductsProvider>
+    </BrowserRouter>
+  </ThemeProvider>
+  // </React.StrictMode>
 );
 
 reportWebVitals();
