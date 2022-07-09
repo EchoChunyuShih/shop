@@ -1,16 +1,21 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import RebornSvg from "../../assets/logo.svg";
+import { Link, useNavigate } from "react-router-dom";
 import { RiGhostSmileLine } from "react-icons/ri";
+
 import { UserContext } from "../../context/user.context";
 import { signOutUser } from "../../utils/firebase.utils";
+import RebornSvg from "../../assets/logo.svg";
+import CartIcon from "../cart-icon/cartIcon.component";
+import CartDropDown from "../cart-dropdown/cart-dropdown.component";
+import { CartContext } from "../../context/cart.context";
 
 const Navigation = () => {
-  const [navOpen, setNavOpen] = useState(true);
-  const [shwoNavItems, setShwoNavItems] = useState(true);
+  const [navOpen, setNavOpen] = useState(false);
+  const [shwoNavItems, setShwoNavItems] = useState(false);
   const { currentUser } = useContext(UserContext);
-
+  const { isCartOpen } = useContext(CartContext);
+  const navigate = useNavigate();
   const toggleNavBar = e => {
     e.preventDefault();
     setNavOpen(!navOpen);
@@ -20,24 +25,48 @@ const Navigation = () => {
       setShwoNavItems(false);
     }
   };
-
+  // const toggleDropdown = e => {
+  //   console.log("click");
+  //   // setDropdownOpen(!dropdownOpen);
+  // };
+  const toggleHomeLink = () => {
+    if (navOpen) {
+      navigate("/");
+    }
+  };
   return (
     <>
       <Navbar onClick={toggleNavBar} className={navOpen ? "active" : null}>
-        {!navOpen && <Logo />}
+        <Logo
+          onClick={navOpen ? toggleHomeLink : null}
+          className={navOpen && "logo_style_when_nav_open"}
+        />
+
         <NavItems className={shwoNavItems && "active"}>
           <NavItemLink to="/">
-            <RiGhostSmileLine />
+            {/* <RiGhostSmileLine /> */}
             Home
           </NavItemLink>
-          <NavItemLink to="/Shop">Shop</NavItemLink>
-          <NavItemLink to="/cart">Cart</NavItemLink>
+          <NavItemLink to="/Shop" className={shwoNavItems && "active"}>
+            Shop
+          </NavItemLink>
           {currentUser ? (
-            <NavItemDiv onClick={signOutUser}>Sign Out</NavItemDiv>
+            <NavItemDiv
+              onClick={signOutUser}
+              className={shwoNavItems && "active"}
+            >
+              Sign Out
+            </NavItemDiv>
           ) : (
-            <NavItemLink to="/signin">Sign In</NavItemLink>
+            <NavItemLink to="/signin" className={shwoNavItems && "active"}>
+              Sign In
+            </NavItemLink>
           )}
+          <CartIcon
+          // onClick={toggleDropdown}
+          />
         </NavItems>
+        {isCartOpen && <CartDropDown className="when_hover_cartIcon" />}
       </Navbar>
     </>
   );
@@ -64,44 +93,87 @@ const Navbar = styled.div`
   }
   &.active {
     height: 3rem;
-    width: 100%;
+    width: calc(100vw - 8rem);
     border-radius: 0% 0% 60px 60px;
+    padding: 0 4rem 0 4rem;
+    justify-content: space-between;
   }
   @media ${props => props.theme.device.tablet} {
     &.active {
       height: 15vh;
-      width: 100%;
+      padding: 0;
+      width: 100vw;
       border-radius: 0% 0% 60px 60px;
       flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: space-around;
+    }
+  }
+  @media ${props => props.theme.device.mobileL} {
+    position: absolute;
+    top: calc(100vh - 3rem);
+    left: 0;
+    border-radius: 0% 60px 0% 0%;
+    &:hover {
+      top: calc(100vh - 4em);
+    }
+    &.active {
+      height: 30vh;
+      top: calc(100vh - 8rem);
+      padding: 0;
+      width: 100vw;
+      border-radius: 60px 60px 0% 0%;
+      /* padding: 0 4rem 0 0; */
     }
   }
 `;
+
 const Logo = styled(RiGhostSmileLine)`
-  position: absolute;
-  top: 8px;
-  left: 5px;
+  margin: 0 10px 10px 0;
   z-index: 20;
   font-size: 1.6rem;
   transition: transform 0.5s ease-in-out;
   ${Navbar}:hover & {
-    transform: scale(1.3) translate(25%, 25%);
+    margin: 0;
+    transform: scale(1.3);
+  }
+  &.logo_style_when_nav_open {
+    margin: 0;
+    ${Navbar}:hover && {
+      transform: none;
+    }
+  }
+  @media ${props => props.theme.device.tablet} {
+    margin: 0 10px 10px 0;
+    &.logo_style_when_nav_open {
+      margin: 1rem 0 0 0;
+      ${Navbar}:hover & {
+        transform: none;
+      }
+    }
+  }
+
+  @media ${props => props.theme.device.mobileL} {
+    margin: 10px 10px 0 0;
   }
 `;
-const NavItems = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  width: 80%;
-  max-width: 900px;
 
+const NavItems = styled.div`
+  display: none;
+  justify-content: end;
+  width: 50%;
+  max-width: 900px;
   opacity: 0;
   &.active {
     opacity: 0.9;
+    display: flex;
+  }
+  @media ${props => props.theme.device.tablet} {
+    width: 90%;
+    justify-content: center;
   }
 `;
 const NavItemDiv = styled.div`
-  color: purple;
-  display: flex;
+  display: none;
   align-items: center;
   background-color: transparent;
   border: none;
@@ -112,6 +184,9 @@ const NavItemDiv = styled.div`
   &:hover {
     background-color: white;
     opacity: 0.8;
+  }
+  &.active {
+    color: purple;
   }
 `;
 const NavItemLink = styled(Link)`
