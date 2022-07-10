@@ -18,4 +18,7 @@ const Container = styled.div`
   height: 4rem;
   width: 100%;
   border-radius: 60px 60px 0% 0%;
+  @media ${props => props.theme.device.mobileL} {
+    display: none;
+  }
 `;
