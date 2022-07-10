@@ -6,12 +6,11 @@ export const Container = styled.div`
   position: relative;
   height: 100%;
   width: 85%;
-  max-width: 800px;
+  max-width: 1000px;
   display: grid;
   place-items: center;
-  max-width: 500px;
   overflow: scroll;
-  margin: 20px auto 4.5rem;
+  margin: 40px auto 4.5rem;
 `;
 export const RegisterFormElement = styled.form`
   display: flex;
@@ -39,7 +38,7 @@ export const InputLabel = styled.label`
     font-size: 1rem;
   }
 `;
-export const SubmitButton = styled.button`
+export const Button = styled.button`
   margin-top: 10px;
   font-size: 1rem;
   border-radius: 50px;
@@ -48,10 +47,15 @@ export const SubmitButton = styled.button`
   padding: 5px 10px;
   font-family: inherit;
   transition: background-color 0.3s ease-in;
-  color: purple;
+  color: ${props => props.theme.colors.purple};
   &:hover {
-    background-color: purple;
+    background-color: ${props => props.theme.colors.purple};
     color: whitesmoke;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    background-color: lavender;
+    color: ${props => props.theme.colors.purple};
   }
 `;
 export const LinkButton = styled(Link)`
@@ -63,7 +67,7 @@ export const LinkButton = styled(Link)`
   border-radius: 50px;
   transition: all 0.1s ease-in;
   &:hover {
-    background-color: purple;
+    background-color: ${props => props.theme.colors.purple};
     color: whitesmoke;
   }
 `;

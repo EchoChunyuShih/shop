@@ -13,7 +13,7 @@ import {
   FormInput,
   InputLabel,
   SignInFormElement,
-  SubmitButton
+  Button
 } from "../shared/FormComponents";
 import { FcGoogle } from "react-icons/fc";
 
@@ -94,7 +94,7 @@ const SignInForm = () => {
           onChange={handleFieldChange}
         />
         <ErrorMessage>{errMsg}</ErrorMessage>
-        <SubmitButton type="submit">Sign Me In!</SubmitButton>
+        <Button type="submit">Sign Me In!</Button>
       </SignInFormElement>
       <LineBreaks>
         <LineBreak /> OR <LineBreak />

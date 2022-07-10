@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   FormInput,
   InputLabel,
-  SubmitButton,
+  Button,
   ErrorMessage,
   EyeOpen,
   EyeClose,
@@ -91,7 +91,7 @@ const SignUpForm = () => {
         required
       />
       <ErrorMessage>{errMsg}</ErrorMessage>
-      <SubmitButton type="submit">Sign Me Up!</SubmitButton>
+      <Button type="submit">Sign Me Up!</Button>
     </RegisterFormElement>
   );
 };
