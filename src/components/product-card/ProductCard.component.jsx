@@ -1,13 +1,19 @@
 import React from "react";
+import { useContext } from "react";
 import styled from "styled-components";
+import { CartContext } from "../../context/cart.context";
 import { Button } from "../shared/FormComponents";
 
 const ProductCard = ({ product }) => {
   const { name, imageUrl, price } = product;
+  const { addItemToCart } = useContext(CartContext);
+  const addProductToCart = () => addItemToCart(product);
   return (
     <ProductsCard>
       <ProductImage src={imageUrl} alt={name} className="product_img" />
-      <HoverTag className="hover_tag">Add To Cart</HoverTag>
+      <HoverTag className="hover_tag" onClick={addProductToCart}>
+        Add To Cart
+      </HoverTag>
       <ProductInfo>
         <ProductName>{name}</ProductName>
         <ProductPrice>${price}</ProductPrice>
@@ -27,7 +33,7 @@ const ProductsCard = styled.div`
   &:hover {
     .hover_tag {
       /* display: flex; */
-      color: purple;
+      color: ${props => props.theme.colors.purple};
       background-color: lavender;
     }
     .product_img {
@@ -67,7 +73,7 @@ const HoverTag = styled(Button)`
   cursor: pointer;
   &&:hover {
     font-size: large;
-    background-color: purple;
+    background-color: ${props => props.theme.colors.purple};
     color: whitesmoke;
   }
 `;
